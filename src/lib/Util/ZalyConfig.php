@@ -10,7 +10,6 @@ class ZalyConfig
 {
     public static $config;
     private static $verifySessionKey="session_verify_";
-
     public static function getConfigFile()
     {
         $fileName = dirname(__FILE__) ."/../../config.php";
@@ -37,6 +36,12 @@ class ZalyConfig
         return self::$config[$key];
     }
 
+    public static function getApiPageIndexUrl()
+    {
+        $domain = self::getDomain();
+        return $domain.self::$config['apiPageIndex'];
+    }
+
     public static function getApiPageJumpUrl()
     {
         $domain = self::getDomain();
@@ -53,9 +58,39 @@ class ZalyConfig
     {
         self::getConfigFile();
 
-        $scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME']."://" : "http://";
-        $domain = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : "" ;
+        $scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME']."://" : "";
+        $domain = isset($_SERVER['HTTP_HOST']) ?$_SERVER['HTTP_HOST'] : "" ;
 
         return $scheme.$domain;
+    }
+
+    public static function getApiPageMsgUrl()
+    {
+        $domain = self::getDomain();
+        return $domain.self::$config['apiPageMsg'];
+    }
+
+    public static function getApiSiteLoginUrl()
+    {
+        $domain = self::getDomain();
+        return $domain.self::$config['apiSiteLogin'];
+    }
+
+    public static function getApiPageLoginUrl()
+    {
+        $domain = self::getDomain();
+        return $domain.self::$config['apiPageLogin'];
+    }
+
+    public static function getApiPageLogoutUrl()
+    {
+        $domain = self::getDomain();
+        return $domain.self::$config['apiPageLogout'];
+    }
+
+    public static function getApiPageSiteInit()
+    {
+        $domain = self::getDomain();
+        return $domain.self::$config['apiPageSiteInit'];
     }
 }

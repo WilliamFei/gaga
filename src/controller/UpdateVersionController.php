@@ -17,7 +17,7 @@ class UpdateVersionController extends HttpBaseController
         $ownerId = isset($ownerInfo['owner']) ? $ownerInfo['owner'] : "";
 
         if($ownerId != $this->userId) {
-            $indexUrl = ZalyConfig::getConfig("apiPageIndex");
+            $indexUrl = ZalyConfig::getApiPageIndexUrl();
             header("Location:".$indexUrl);
             exit();
         }
@@ -41,11 +41,11 @@ class UpdateVersionController extends HttpBaseController
                 require (dirname(__DIR__)."/model/DB/".$className.".php");
                 $className::getInstance()->upgradeDB();
             }
-            $indexUrl = ZalyConfig::getConfig("apiPageIndex");
+            $indexUrl = ZalyConfig::getApiPageIndexUrl();
             header("Location:".$indexUrl);
             exit();
         } else {
-            $initUrl = ZalyConfig::getConfig("apiPageSiteInit");
+            $initUrl = ZalyConfig::getApiPageSiteInit();
             header("Location:".$initUrl);
             exit();
         }

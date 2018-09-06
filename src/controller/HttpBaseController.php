@@ -37,7 +37,7 @@ abstract class HttpBaseController extends \Wpf_Controller
     {
 
         if(!$this->checkDBIsExist()) {
-            $initUrl = ZalyConfig::getConfig("apiPageSiteInit");
+            $initUrl = ZalyConfig::getApiPageSiteInit();
             header("Location:" . $initUrl);
             exit();
         }
@@ -62,7 +62,7 @@ abstract class HttpBaseController extends \Wpf_Controller
 
             if ($preSessionId) {
                 $this->handlePreSessionId();
-                $apiPageIndex = ZalyConfig::getConfig("apiPageIndex");
+                $apiPageIndex = ZalyConfig::getApiPageIndexUrl();
                 if($x) {
                     if (strpos($apiPageIndex, "?")) {
                         header("Location:" . $apiPageIndex."&x=".$x);
@@ -176,7 +176,7 @@ abstract class HttpBaseController extends \Wpf_Controller
     {
         $x = isset($_GET['x']) ? $_GET['x'] : "";
         setcookie ("zaly_site_user", "", time()-3600, "/", "", false, true);
-        $apiPageLogin = ZalyConfig::getConfig("apiPageLogin");
+        $apiPageLogin = ZalyConfig::getApiPageLoginUrl();
         if($x) {
             if (strpos($apiPageLogin, "?")) {
                 header("Location:" . $apiPageLogin."&x=".$x);
@@ -226,6 +226,7 @@ abstract class HttpBaseController extends \Wpf_Controller
         $cookieBase64 = base64_encode($cookieAes);
         setcookie("zaly_site_user", $cookieBase64, time() + $this->sessionIdTimeOut, "/", "", false, true);
     }
+
 
     /**
      * 查库操作

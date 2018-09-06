@@ -82,7 +82,7 @@ abstract class Duckchat_MiniProgramController extends \Wpf_Controller
         if (!$this->checkDBIsExist()) {
             $this->action = $_GET['action'];
             $this->requestTransportData = new \Zaly\Proto\Core\TransportData();
-            $this->setRpcError($this->errorSiteInit, ZalyConfig::getConfig("apiPageSiteInit"));
+            $this->setRpcError($this->errorSiteInit, ZalyConfig::getApiPageSiteInit());
             $this->rpcReturn($this->action, null);
             return;
         }
