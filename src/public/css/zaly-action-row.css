@@ -1,0 +1,82 @@
+
+
+.action-group .action-row,
+.action-user .action-row {
+    height:4.69rem;
+    background:rgba(255,255,255,1);
+    display: flex;
+    align-items: stretch;
+    border-top: 1px solid rgba(223,223,223,1);
+}
+
+.action-group .action-row:last-child,
+.action-user .action-row:last-child {
+    border-bottom: 1px solid rgba(223,223,223,1);
+}
+
+.action-row .action-title {
+    margin-left: 0.84rem;
+    font-size:1.5rem;
+    color:rgba(20,16,48,1);
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 1rem;
+}
+
+.action-btn img {
+    max-height: 2.91rem;
+}
+
+.right-body-sidebar-menu {
+    height: 5.53rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.right-body-sidebar-menu img {
+    width: 1.12rem;
+    margin-right: 1.03rem;
+
+}
+
+.group-desc, .user-desc, .group-name {
+    padding: 0.94rem;
+    width:100%;
+}
+
+.group-desc-title, .user-desc-title, .group-name-title {
+    font-size:1.5rem;
+    color:rgba(20,16,48,1);
+    font-weight: bold;
+}
+
+.group-desc-body, .user-desc-body {
+    height:1.5rem;
+    font-size:1.5rem;
+    color:rgba(20,16,48,1);
+    line-height:1.5rem;
+    padding-bottom: 3rem;
+    padding-top:1rem;
+    height: 13.04rem;
+}
+
+.save_group_introduce {
+    border:none;
+    position: absolute;
+    right: 2rem;
+    font-size: 1.31rem;
+    background-color: white;
+    cursor: pointer;
+}
+.save_group_introduce:focus {
+    outline: none;
+    border:none;
+}

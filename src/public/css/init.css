@@ -1,0 +1,147 @@
+body,html {
+    background-color: #f4f4f4;
+    height: 100%;
+    font-size: 10.66px;
+    padding:0;
+    margin:0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.zaly_container {
+    padding:0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url("../img/login_bg.png");
+}
+.zaly_login{
+    width:75rem;
+    /*height:47rem;*/
+    background:rgba(255,255,255,1);
+    /*box-shadow:0rem 0.83rem 1.25rem 0.42rem rgba(74,56,180,1);*/
+    border-radius:0.83rem;
+    position:relative;
+    overflow: hidden;
+    font-size: 1.3rem;
+    text-align: left;
+}
+.initHeader{
+    text-align: center;
+    margin-top: 6rem;
+    font-size:2.25rem;
+    font-family:PingFangSC-Medium;
+    font-weight:500;
+    color:rgba(76,59,177,1);
+}
+
+
+
+#verifyPluginId {
+    width:12.2rem;
+    height:2.25rem;
+    background:rgba(236,236,236,1);
+    border-radius:0.28rem;
+    outline: none;
+}
+
+.init_check{
+    margin-left: 23rem;
+    font-size:1.88rem;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(20,16,48,1);
+}
+
+.init_check_info {
+    display: flex;
+    justify-content: space-between;
+    margin-top:2rem;
+}
+
+.init_check_result {
+    width:2rem;
+    height:2rem;
+    display: flex;
+    margin-right: 23rem;
+}
+.init_check_result img {
+    width: 2rem;
+    height: 2rem;
+}
+.login_button {
+    margin-top: 5rem;
+    width:28.14rem;
+    height:4.69rem;
+    background:rgba(76,59,177,1);
+    border-radius:0.66rem;
+    color: white;
+    font-size:1.88rem;
+    font-family:PingFangSC-Medium;
+    font-weight:500;
+    cursor: pointer;
+    outline: none;
+}
+.margin-top3 {
+    margin-top: 3rem;
+}
+.login_button:focus,
+.login_button:active {
+    outline: none;
+}
+.choose_login_type {
+    margin-right: 34rem;
+}
+
+@media (max-width: 500px) {
+    body,html {
+        background-color: #f4f4f4;
+        height: 100%;
+        font-size: 10.66px;
+        padding:0;
+        margin:0;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .zaly_container {
+        padding:0;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .zaly_login{
+        width:100%;
+        height: 100%;
+        background:rgba(255,255,255,1);
+        border-radius:0rem;
+        position:relative;
+        overflow: hidden;
+        font-size: 1.3rem;
+        text-align: left;
+    }
+    .initHeader{
+        text-align: center;
+        margin-top: 6rem;
+        font-size:2.25rem;
+        font-family:PingFangSC-Medium;
+        font-weight:500;
+        color:rgba(76,59,177,1);
+    }
+    .init_check {
+        margin-left: 3rem;
+        font-size: 1.88rem;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(20,16,48,1);
+    }
+    .init_check_result {
+        width: 2rem;
+        height: 2rem;
+        display: flex;
+        margin-right: 3rem;
+    }
+    .choose_login_type {
+        margin-right: 12rem;
+    }
+}
