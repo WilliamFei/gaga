@@ -66,9 +66,10 @@ class Site_Config
         }
 
         $managersValue = $this->ctx->SiteConfigTable->selectSiteConfig(SiteConfig::SITE_MANAGERS);
-        if ($managersValue) {
-            $managersArray = explode(",", $managersValue);
 
+        if ($managersValue) {
+            $managersValueStr = isset($managersValue['managers']) ? $managersValue['managers'] : "";
+            $managersArray = explode(",", $managersValueStr);
             if (!empty($managersArray)) {
                 $managers = array_merge($managers, $managersArray);
             }
@@ -78,4 +79,15 @@ class Site_Config
         return $managers;
     }
 
+    public function isManager($userId)
+    {
+        if (empty($userId)) {
+            return false;
+        }
+
+        if (in_array($userId, $this->getSiteManagers())) {
+            return true;
+        }
+
+    }
 }

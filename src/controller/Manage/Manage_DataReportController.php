@@ -6,7 +6,7 @@
  * Time: 10:59 AM
  */
 
-class Manage_DataReportController extends ManageController
+class Manage_DataReportController extends Manage_CommonController
 {
 
     public function doRequest()

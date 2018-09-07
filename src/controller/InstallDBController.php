@@ -38,7 +38,7 @@ class InstallDBController
             $sqliteName = dirname(__FILE__) . '/../' . $sqliteName;
             $isInstalled = file_exists($sqliteName);
             if ($isInstalled) {
-                $apiPageIndex = ZalyConfig::getApiPageIndexUrl();
+                $apiPageIndex = ZalyConfig::getConfig("apiPageIndex");
                 header("Location:" . $apiPageIndex);
                 exit();
             }
@@ -51,7 +51,7 @@ class InstallDBController
                 $port = $_SERVER['SERVER_PORT'];
                 $hosts = explode(":", $serverHost);
                 $host = array_shift($hosts);
-                $scheme = $_SERVER['REQUEST_SCHEME'];
+                $scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : "http";
                 $sessionVerifyUrl = $scheme . "://" . $serverHost . '/index.php?action=api.session.verify&body_format=pb';
 
                 $loginPluginId = $_POST['pluginId'];
@@ -61,7 +61,7 @@ class InstallDBController
                 $config['loginPluginId'] = in_array($loginPluginId, $this->loginPluginIds) ? $loginPluginId : 100;
                 $config['session_verify_105'] = $sessionVerifyUrl;
                 $config['msectime'] = ZalyHelper::getMsectime();
-
+                $config['siteAddress'] = $scheme . "://" . $serverHost;
                 $contents = var_export($config, true);
                 file_put_contents($configFileName, "<?php\n return {$contents};\n ");
                 if (function_exists("opcache_reset")) {
@@ -591,16 +591,36 @@ class InstallDBController
                     "gif",
                     "", 
                     106,
-                    "index.php?action=plugin.gif",
+                    "index.php?action=miniProgram.gif.index",
                     1,
                      ' . Zaly\Proto\Core\PluginUsageType::PluginUsageU2Message . ', 
-                     ' . Zaly\Proto\Core\PluginLoadingType::PluginLoadingNewPage . ', 
+                     ' . Zaly\Proto\Core\PluginLoadingType::PluginLoadingChatbox . ', 
                      ' . Zaly\Proto\Core\PluginPermissionType::PluginPermissionAll . ',
                      "");
                 ';
         $prepare = $this->db->prepare($sql);
         $this->handelPrepareError($prepare);
         $prepare->execute();
+
+
+        $sql = 'insert into
+                    sitePlugin(pluginId, name, logo, sort, landingPageUrl,landingPageWithProxy, usageType,loadingType,permissionType,authKey)
+                values
+                    (107,
+                    "gif",
+                    "", 
+                    107,
+                    "index.php?action=miniProgram.gif.index",
+                    1,
+                     ' . Zaly\Proto\Core\PluginUsageType::PluginUsageGroupMessage . ', 
+                     ' . Zaly\Proto\Core\PluginLoadingType::PluginLoadingChatbox . ', 
+                     ' . Zaly\Proto\Core\PluginPermissionType::PluginPermissionAll . ',
+                     "");
+                ';
+        $prepare = $this->db->prepare($sql);
+        $this->handelPrepareError($prepare);
+        $prepare->execute();
+
     }
 
     private function _insertSiteManagerPlugin($host, $port)

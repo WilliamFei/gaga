@@ -6,7 +6,7 @@
  * Time: 10:59 AM
  */
 
-class Manage_Group_DeleteController extends ManageController
+class Manage_Group_DeleteController extends Manage_CommonController
 {
 
     public function doRequest()

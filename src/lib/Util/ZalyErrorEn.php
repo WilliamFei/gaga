@@ -46,6 +46,7 @@ class ZalyErrorEn extends  ZalyErrorBase
         "error.invalid.email" => "Invalid mailbox",
         "error.exist.email"  => "The mailbox already exists",
         "error.exist.loginName" => "LoginName already exists",
+        "error.site.pubkPem" => "sitePubkPem is not available",
 
         "error.match.login"  => "Account password does not match",
         "error.exist.user"   => "Account does not exist",

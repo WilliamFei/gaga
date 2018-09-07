@@ -438,7 +438,8 @@
          * @param target
          */
         function zalyjsCommonOpenPage(url, target = "_blank") {
-            window.open(url, target);
+            // window.open(url, target);
+            location.href = url;
         }
 
     </script>
@@ -609,15 +610,15 @@
                         <div class="item-body-tail">
                             <div id="mini-program-usage-text" style="margin-right: 4px">
                                 <?php if ($usageType == "1") { ?>
-                                    <?php if ($lang == "1") { ?> 首页小程序<?php } else { ?> Home Page <?php } ?>
+                                    <?php if ($lang == "1") { ?> 首页小程序<?php } else { ?> Home Mini Program <?php } ?>
                                 <?php } else if ($usageType == "2") { ?>
-                                    <?php if ($lang == "1") { ?> 登陆小程序<?php } else { ?> Home Page <?php } ?>
+                                    <?php if ($lang == "1") { ?> 登陆小程序<?php } else { ?>  "Login Mini Program" <?php } ?>
                                 <?php } else if ($usageType == "3") { ?>
-                                    <?php if ($lang == "1") { ?> 二人聊天小程序<?php } else { ?> Home Page <?php } ?>
+                                    <?php if ($lang == "1") { ?> 二人聊天小程序<?php } else { ?> U2 Chat Mini Program <?php } ?>
                                 <?php } else if ($usageType == "4") { ?>
-                                    <?php if ($lang == "1") { ?> 临时会话小程序<?php } else { ?> Home Page <?php } ?>
+                                    <?php if ($lang == "1") { ?> 临时会话小程序<?php } else { ?> Tmp Chat Mini Program <?php } ?>
                                 <?php } else if ($usageType == "5") { ?>
-                                    <?php if ($lang == "1") { ?> 聊天界面底部小程序<?php } else { ?> Home Page <?php } ?>
+                                    <?php if ($lang == "1") { ?>群组聊天小程序<?php } else { ?> Group Chat Mini Program <?php } ?>
                                 <?php } ?>
                             </div>
                             <img class="more-img"
@@ -657,14 +658,13 @@
                         <?php } ?>
 
                         <div class="item-body-tail">
-
                             <div id="mini-program-display-text" style="margin-right: 4px">
                                 <?php if ($loadingType == "0") { ?>
-                                    <?php if ($lang == "1") { ?> 新页面打开<?php } else { ?> Home Page <?php } ?>
+                                    <?php if ($lang == "1") { ?> 新页面打开<?php } else { ?> New Page <?php } ?>
                                 <?php } else if ($loadingType == "1") { ?>
-                                    <?php if ($lang == "1") { ?> 悬浮打开<?php } else { ?> Home Page <?php } ?>
+                                    <?php if ($lang == "1") { ?> 悬浮打开<?php } else { ?> Float Page <?php } ?>
                                 <?php } else if ($loadingType == "2") { ?>
-                                    <?php if ($lang == "1") { ?> Mask打开<?php } else { ?> Home Page <?php } ?>
+                                    <?php if ($lang == "1") { ?> Mask打开<?php } else { ?> Mask Page <?php } ?>
                                 <?php } else if ($loadingType == "3") { ?>
                                     <?php if ($lang == "1") { ?> Chatbox打开<?php } else { ?> Chatbox Page <?php } ?>
                                 <?php } else if ($loadingType == "4") { ?>

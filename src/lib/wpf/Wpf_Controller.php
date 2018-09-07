@@ -26,7 +26,6 @@ abstract class Wpf_Controller {
 
     public function display($viewName, $params = []) {
         // 自己实现实现一下这个方法，加载view目录下的文件
-        // 自己实现实现一下这个方法，加载view目录下的文件
         ob_start();
         $fileName = str_replace("_", "/", $viewName);
         $path = dirname(dirname(__DIR__)).'/views/'.$fileName.'.php';
@@ -34,8 +33,7 @@ abstract class Wpf_Controller {
             extract($params, EXTR_SKIP);
         }
         include($path);
-        $var = ob_get_contents();
-        ob_end_clean();
+        $var = ob_get_clean();
         return $var;
     }
 

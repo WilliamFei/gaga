@@ -433,7 +433,8 @@
      * @param target
      */
     function zalyjsCommonOpenPage(url, target = "_blank") {
-        window.open(url, target);
+        // window.open(url, target);
+        location.href = url;
     }
 
 </script>

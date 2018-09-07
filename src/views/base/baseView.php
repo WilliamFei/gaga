@@ -30,6 +30,13 @@
                         </div>
                     </div>
 
+                    <div class=" hint--right" style="width: 7.5rem;" aria-label="Search" data-local="aria-label:searchTip">
+                        <div class="l-sb-item"  data="search" >
+                            <img src="../../public/img/msg/search_unselect.png" data="unselect" class="search-unselect item-img" />
+                            <img src="../../public/img/msg/search.png" data="select" class="search-select item-img" style="display: none;"/>
+                        </div>
+                    </div>
+
                     <div class="preemptiveVersionDiv">
                         <img class='preemptive_version' src="../../public/img/preemptive_version.png"/>
                     </div>

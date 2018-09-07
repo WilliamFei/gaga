@@ -57,10 +57,8 @@ function handleClientSendRequest(action, reqData, callback, isHttp)
         };
 
         var packageId = localStorage.setItem(PACKAGE_ID, (Number(packageId)+1));
-
         this.callback = callback;
         var transportDataJson = JSON.stringify(transportData);
-
         var enableWebsocketGW = localStorage.getItem(websocketGW);
         if(enableWebsocketGW == "true" && !isHttp  && wsUrl != null && wsUrl) {
             putWsQueue(transportDataJson, callback);
@@ -82,6 +80,7 @@ function handleClientSendRequest(action, reqData, callback, isHttp)
             });
         }
     } catch(e) {
+        console.log(e.message);
         return false;
     }
 }

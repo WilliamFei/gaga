@@ -6,7 +6,7 @@
  * Time: 10:59 AM
  */
 
-class Manage_Group_ProfileController extends ManageController
+class Manage_Group_ProfileController extends Manage_CommonController
 {
 
     public function doRequest()

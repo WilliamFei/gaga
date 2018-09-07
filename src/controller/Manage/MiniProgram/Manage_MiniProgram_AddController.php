@@ -6,7 +6,7 @@
  * Time: 6:40 PM
  */
 
-class Manage_MiniProgram_AddController extends ManageController
+class Manage_MiniProgram_AddController extends Manage_CommonController
 {
 
     protected function doRequest()

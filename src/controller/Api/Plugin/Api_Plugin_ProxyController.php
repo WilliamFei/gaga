@@ -63,6 +63,7 @@ class Api_Plugin_ProxyController extends \BaseController
             $this->setRpcError("error.alert", $ex->getMessage());
             $this->rpcReturn($transportData->getAction(), new $this->classNameForResponse());
         }
+        return;
     }
 
 
@@ -79,7 +80,7 @@ class Api_Plugin_ProxyController extends \BaseController
 
         $reqUrlStruct = parse_url($reqUrl);
         if (!empty($reqUrlStruct["scheme"])) {
-            $query = !empty($reqUrlStruct["query"]) ? "?".$reqUrlStruct["query"] : "";
+            $query = !empty($reqUrlStruct["query"]) ? "?" . $reqUrlStruct["query"] : "";
             $reqUrl = $reqUrlStruct["path"] . $query;
         }
 
@@ -95,14 +96,14 @@ class Api_Plugin_ProxyController extends \BaseController
             $host = "";
 
             // 必须用scheme，防止用户多输//
-            if (empty($pluginUrl["scheme"]) && empty($pluginUrl['host']) ) {
+            if (empty($pluginUrl["scheme"]) && empty($pluginUrl['host'])) {
                 $schema = $defaultScheme;
                 $host = $defaultHost;
             } else {
                 $schema = $pluginUrl["scheme"];
                 $host = $pluginUrl["host"];
                 $port = empty($pluginUrl["port"]) ? "" : ":{$pluginUrl["port"]}";
-                $host = $host.$port;
+                $host = $host . $port;
             }
 
             $url = "{$schema}://{$host}/{$reqUrl}";
@@ -139,7 +140,7 @@ class Api_Plugin_ProxyController extends \BaseController
             "content-length"
         );
 
-        foreach ($header as $key=>$val) {
+        foreach ($header as $key => $val) {
             if (in_array(strtolower($key), $invalidHeaderKey)) {
                 unset($header[$key]);
             }

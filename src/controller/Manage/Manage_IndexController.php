@@ -6,7 +6,7 @@
  * Time: 11:05 AM
  */
 
-class Manage_IndexController extends ManageController
+class Manage_IndexController extends Manage_CommonController
 {
 
     public function doRequest()

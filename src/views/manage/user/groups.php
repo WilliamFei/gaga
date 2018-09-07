@@ -424,7 +424,8 @@
          * @param target
          */
         function zalyjsCommonOpenPage(url, target = "_blank") {
-            window.open(url, target);
+            // window.open(url, target);
+            location.href = url;
         }
 
     </script>
@@ -520,7 +521,6 @@
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.js"></script>
 
 <script type="text/javascript">
-    // ------- new js----
 
     $(document).on("click", "#group-list-id", function () {
         var groupId = $(this).attr("groupId");

@@ -57,8 +57,8 @@ class Api_Friend_SearchController extends BaseController
                 if (!empty($friendInfo)) {
                     $friendProfile->setMute($friendInfo['mute']);
                     $friendProfile->setRelation($friendInfo['relation']);
-                }else{
-                    $friendProfile->setRelation($friendInfo['relation']);
+                } else {
+                    $friendProfile->setRelation(0);
                 }
                 $response->setFriends([$friendProfile]);
             }

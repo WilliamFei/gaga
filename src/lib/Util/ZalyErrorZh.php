@@ -59,6 +59,7 @@ class ZalyErrorZh extends ZalyErrorBase
         "error.loginName.length" => "登录名长度不合法",
         "error.password.length" => "密码长度不合法",
         "error.nickname.length" => "昵称长度不合法",
+        "error.site.pubkPem" => "站点公钥不合法",
 
     ];
 

@@ -46,7 +46,9 @@
 
 
     <div id="create-group">
-
+        <div class="close_div">
+            <img src="../../public/img/close.png" onclick="closeMaskDiv('#create-group');">
+        </div>
         <div class="flex-container justify-content-center" >
             <div class="header_tip_font align-items-center"  data-local-value="createGroupTip">Create Group</div>
         </div>
@@ -67,6 +69,9 @@
     </div>
 
     <div id="edit-remark">
+        <div class="close_div">
+            <img src="../../public/img/close.png" onclick="closeMaskDiv('#edit-remark');">
+        </div>
         <div class="flex-container" style="display: flex;justify-content: center;">
             <div class="header_tip_font align-items-center" data-local-value="editRemarkTip">Edit Remark</div>
         </div>
@@ -87,8 +92,25 @@
 
     </div>
 
+    <div id="search-user-div">
+        <div class="search-user-header">
+            <div class="search-user-header-content">
+               <input type="text" class="form-control create_group_box_div_input search-user-input" onkeypress="searchUser()" onkeydown="searchUser()" >
+           </div>
+            <img src="../../public/img/msg/search_icon.png" style="width:2rem; height:2rem;">
+        </div>
+        <div class="search-user-content">
+            <div class="search-user-img">
+               <img src="../../public/img/msg/search_friend.png">
+            </div>
+        </div>
+    </div>
+
 
     <div id="permission-join">
+        <div class="close_div">
+            <img src="../../public/img/close.png" onclick="closeMaskDiv('#permission-join');">
+        </div>
         <div class="flex-container" style="display: flex;justify-content: center;">
             <div class="header_tip_line_left "></div>
             <div class="header_tip_font  font-size-12  align-items-center" data-local-value="joinGroupPermissionsTip">Add Group Permissions</div>

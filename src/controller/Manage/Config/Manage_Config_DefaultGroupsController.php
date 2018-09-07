@@ -6,7 +6,7 @@
  * Time: 10:58 AM
  */
 
-class Manage_Config_DefaultGroupsController extends ManageController
+class Manage_Config_DefaultGroupsController extends Manage_CommonController
 {
     /**
      * 站点管理

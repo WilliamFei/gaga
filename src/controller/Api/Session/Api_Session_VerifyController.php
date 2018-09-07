@@ -74,7 +74,7 @@ class Api_Session_VerifyController extends BaseController
             $key = $this->ctx->ZalyRsa->encrypt($loginUserProfileKey, $sitePubkPem);
             $aesStr = $this->ctx->ZalyAes->encrypt(serialize($userProfile), $loginUserProfileKey);
 
-            $this->ctx->Wpf_Logger->info("site: api.session.verify", "profile=" . json_encode($userProfile));
+            $this->ctx->Wpf_Logger->info("site: api.session.verify", "proto profile=" . $userProfile->serializeToJsonString());
 
             $response = new \Zaly\Proto\Platform\ApiSessionVerifyResponse();
             $response->setKey($key);

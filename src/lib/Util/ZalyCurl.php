@@ -28,7 +28,7 @@ class ZalyCurl
      */
     public function requestWithActionByPb($action, $requestBody, $url, $method)
     {
-        $tag = __CLASS__.'-'.__FUNCTION__;
+        $tag = __CLASS__ . '-' . __FUNCTION__;
         try {
             $anyBody = new \Google\Protobuf\Any();
             $anyBody->pack($requestBody);
@@ -46,14 +46,14 @@ class ZalyCurl
             curl_setopt($this->_curlObj, CURLOPT_TIMEOUT, $this->timeOut);
 
             if (($resp = curl_exec($this->_curlObj)) === false) {
-                $this->wpf_Logger->error('when run Router, unexpected error :' . curl_error($this->_curlObj));
+                $this->wpf_Logger->error('when run Router, unexpected error :' , curl_error($this->_curlObj));
                 throw new Exception(curl_error($this->_curlObj));
             }
             curl_close($this->_curlObj);
             return $resp;
         } catch (\Exception $e) {
             $message = sprintf("msg:%s file:%s:%d", $e->getMessage(), $e->getFile(), $e->getLine());
-            $this->wpf_Logger->error($tag, 'when run Router, unexpected error :' . $message);
+            $this->wpf_Logger->error($tag, 'when run Router, unexpected error :' , $message);
             throw new Exception($e->getMessage());
         }
     }
@@ -73,7 +73,7 @@ class ZalyCurl
      */
     public function request($method, $url, $params = [], $headers = [])
     {
-        $tag = __CLASS__.'-'.__FUNCTION__;
+        $tag = __CLASS__ . '-' . __FUNCTION__;
         try {
             $this->_curlObj = curl_init();
             $this->_getRequestParams($params);
@@ -89,7 +89,7 @@ class ZalyCurl
             return $resp;
         } catch (\Exception $e) {
             $message = sprintf("msg:%s file:%s:%d", $e->getMessage(), $e->getFile(), $e->getLine());
-            $this->wpf_Logger->error($tag, 'when run Router, unexpected error :' . $message);
+            $this->wpf_Logger->error($tag, 'when run Router, unexpected error :' , $message);
             throw new Exception($e->getMessage());
         }
     }
@@ -103,16 +103,16 @@ class ZalyCurl
 
             $bodyFormat = isset($urlParams['body_format']) ? $urlParams['body_format'] : "";
             $action = isset($urlParams['action']) ? $urlParams['action'] : "";
-            $body  = json_decode($params, true);
+            $body = json_decode($params, true);
 
             if (isset($bodyFormat) && !isset($body['action'])) {
                 switch ($bodyFormat) {
                     case 'json':
-                        $body  = json_decode($params, true);
+                        $body = json_decode($params, true);
                         $params = [
-                            "action"  => $action,
+                            "action" => $action,
                             "body" => $body,
-                            ];
+                        ];
                         $params = json_encode($params);
                         break;
                     case 'pb':
@@ -138,7 +138,7 @@ class ZalyCurl
             curl_setopt($this->_curlObj, CURLOPT_HEADER, true);
 
             if (($resp = curl_exec($this->_curlObj)) === false) {
-                $this->wpf_Logger->error('when run Router, unexpected error :' , curl_error($this->_curlObj));
+                $this->wpf_Logger->error('when run Router, unexpected error :', curl_error($this->_curlObj));
                 throw new Exception(curl_error($this->_curlObj));
             }
 
@@ -177,7 +177,7 @@ class ZalyCurl
         }
     }
 
-    private function convertUrlQuery($query)
+    public function convertUrlQuery($query)
     {
         if (empty($query)) {
             return [];

@@ -73,7 +73,7 @@ class SiteSessionTable extends BaseTable
         $prepare->bindValue(":sessionId", $sessionId);
         $prepare->execute();
         $sessionInfo = $prepare->fetch(\PDO::FETCH_ASSOC);
-//        $this->ctx->Wpf_Logger->writeSqlLog($tag, $sql, $sessionId, $startTime);
+        $this->ctx->Wpf_Logger->writeSqlLog($tag, $sql, $sessionId, $startTime);
         return $sessionInfo;
     }
 

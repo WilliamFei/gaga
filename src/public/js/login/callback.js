@@ -52,6 +52,11 @@ function loginNameExist()
 
 function loginNameNotExist()
 {
+    if(sitePubkPem.length<1) {
+        alert("站点公钥获取失败");
+        return false;
+    }
+
     var action = "api.passport.passwordReg";
     var reqData = {
         loginName:registerLoginName,

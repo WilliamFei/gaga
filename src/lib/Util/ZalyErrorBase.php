@@ -56,6 +56,7 @@ abstract class  ZalyErrorBase
     public $errorLoginNameLength = "error.loginName.length";
     public $errorPassowrdLength = "error.password.length";
     public $errorNicknameLength = "error.nickname.length";
+    public $errorSitePubkPem = "error.site.pubkPem";
 
     public $errorMatchLogin = "error.match.login";
     public $errorExistUser = "error.exist.user";

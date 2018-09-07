@@ -437,8 +437,9 @@
          * @param url
          * @param target
          */
-        function zalyjsCommonOpenPage(url, target = "_blank") {
-            window.open(url, target);
+        function zalyjsCommonOpenPage(url) {
+            // window.open(url, target);
+            location.href = url;
         }
 
     </script>
@@ -520,7 +521,6 @@
             </div>
             <div class="division-line"></div>
 
-            <!--      part1: site logo      -->
             <div class="item-row">
                 <div class="item-body">
                     <div class="item-body-display">
@@ -793,7 +793,10 @@
     }
 
     function updateAvatarResponse(url, data, result) {
-        alert(result);
+        var res = JSON.parse(result);
+        if (res.errCode != "success") {
+            return getLanguage() == 1 ? "更新头像失败" : "update user avatar fail";
+        }
     }
 
 </script>
@@ -867,8 +870,6 @@
         var value = $(".popup-group-input").val();
         var nameData = $("#update-user-button").attr("data");
 
-        alert("userId=" + userId + "name=" + nameData + " value=" + value);
-
         if (nameData == null || nameData == "") {
             alert("update fail");
             return;
@@ -888,7 +889,11 @@
     }
 
     function updateNameResponse(url, data, result) {
-        alert(result);
+        var res = JSON.parse(result);
+
+        if (res.errCode != "success") {
+            alert(getLanguage() == 1 ? "更新成功" : "update name error");
+        }
     }
 
     //enable realName
@@ -910,7 +915,11 @@
     });
 
     function addManagerResponse(url, data, result) {
-        alert(result);
+        var res = JSON.parse(result);
+
+        if (res.errCode != "success") {
+            alert(getLanguage() == 1 ? "更新成功" : "update error");
+        }
     }
 
 
@@ -931,7 +940,11 @@
     });
 
     function addDefaultFriendResponse(url, data, result) {
-        alert(result);
+        var res = JSON.parse(result);
+
+        if (res.errCode != "success") {
+            alert(getLanguage() == 1 ? "更新成功" : "update error");
+        }
     }
 
 
@@ -959,7 +972,15 @@
     });
 
     function removeUserResponse(url, data, result) {
-        alert(result);
+        var res = JSON.parse(result);
+
+        if (res.errCode == "success") {
+            var url = "index.php?action=manage.user&lang=" + getLanguage();
+            location.href = url;
+        } else {
+            alert(getLanguage() == 1 ? "删除用户失败" : "update error");
+        }
+
     }
 
 </script>

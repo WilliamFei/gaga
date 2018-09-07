@@ -380,6 +380,10 @@ $(document).on("click", ".l-sb-item", function(){
             friendOffset = 0;
             getFriendList();
             break;
+        case "search":
+            showWindow($("#search-user-div"));
+            break;
+
     }
     displayRoomListMsgUnReadNum();
 });
@@ -2296,3 +2300,63 @@ $(document).on("click", ".web-msg-click", function(){
     console.log(url);
     window.open(url);
 });
+
+function searchUser(event)
+{
+    var event = event || window.event;
+    var isIE = (document.all) ? true : false;
+    var key;
+
+    if(isIE) {
+        key = event.keyCode;
+    } else {
+        key = event.which;
+    }
+
+    if(key != 13) {
+        return;
+    }
+    var searchValue = $(".search-user-input").val();
+    var action = "api.friend.search";
+    var reqData = {
+        keywords:searchValue,
+        offset:0,
+        count:defaultCountKey
+    };
+    handleClientSendRequest(action, reqData, handleSearchUser);
+    $(".search-user-content").html('');
+}
+
+function handleSearchUser(results)
+{
+    if(results.hasOwnProperty("friends")) {
+        var friends = results.friends;
+        console.log("results == search user ==" + JSON.stringify(friends));
+        var friendsLength = friends.length;
+        for(var i=0; i<friendsLength; i++) {
+            var friendProfile = friends[i].profile;
+            var html = template("tpl-search-user-info", {
+                nickname:friendProfile.nickname,
+                userId:friendProfile.userId,
+                token:token
+            });
+            $(".search-user-content").append(html);
+            getNotMsgImg(friendProfile.userId, friendProfile.avatar);
+        }
+    } else {
+        var html = template("tpl-search-user-info-void", {});
+        $(".search-user-content").append(html);
+    }
+}
+
+$(document).on("click", ".search-add-friend-btn", function () {
+    var userId = $(this).attr("userId");
+    sendFriendApplyReq(userId, "", "");
+    $(this).attr("disabled", "disabled");
+});
+
+function closeMaskDiv(str)
+{
+    console.log(str)
+    removeWindow($(str));
+}

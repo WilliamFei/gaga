@@ -13,6 +13,8 @@ use Google\Protobuf\Internal\Message;
 
 abstract class BaseController extends \Wpf_Controller
 {
+    protected $logger;
+
     protected $httpHeader = ["KeepSocket" => true];
     protected $headers = [];
     protected $bodyFormatType;
@@ -140,6 +142,7 @@ abstract class BaseController extends \Wpf_Controller
             exit();
         }
         $this->ctx = new BaseCtx();
+        $this->logger = new Wpf_Logger();
     }
 
     /**
@@ -272,7 +275,7 @@ abstract class BaseController extends \Wpf_Controller
 
         $sessionInfo = $this->ctx->SiteSessionTable->getSessionInfoBySessionId($this->sessionId);
         if (!$sessionInfo) {
-            $this->ctx->Wpf_Logger->error($tag, "session  info is null , session id = " . $this->sessionId);
+//            $this->ctx->Wpf_Logger->error($tag, "session  info is null , session id = " . $this->sessionId);
             $errorCode = $this->zalyError->errorSession;
             $errorInfo = $this->zalyError->getErrorInfo($errorCode);
             $this->setRpcError($errorCode, $errorInfo);

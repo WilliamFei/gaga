@@ -37,9 +37,12 @@ function ZalyIm(params)
     landingPageUrl = loginPluginProfile.landingPageUrl;
 }
 
+
 function requestSiteConfig(callback)
 {
     var action  = "api.site.config";
     var reqData = {};
     handleClientSendRequest(action, reqData, callback, true);
 }
+
+requestSiteConfig();

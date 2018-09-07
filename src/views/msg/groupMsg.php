@@ -10,10 +10,11 @@
     <link rel="stylesheet" href="../../public/css/hint.min.css">
     <link rel="stylesheet" href="../../public/css/zaly_msg.css" />
     <link rel="stylesheet" media="(max-height: 650px)" href="../../public/css/zaly_media.css" />
-
     <script src="../../public/js/jquery.min.js"></script>
     <script src="../../public/js/template-web.js"></script>
     <script src="../../public/js/jquery.i18n.properties.min.js"></script>
+    <script src="../../public/js/im/zalyKey.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 </head>
@@ -39,7 +40,6 @@
 <?php include(dirname(__DIR__) . '/base/template.php'); ?>
 <?php include(dirname(__DIR__) . '/base/template_msg.php'); ?>
 
-<script src="../../public/js/im/zalyKey.js"></script>
 <script src="../../public/js/im/zalyAction.js"></script>
 <script src="../../public/js/im/zalyClient.js"></script>
 <script src="../../public/js/im/zalyBaseWs.js"></script>

@@ -57,14 +57,20 @@ class Api_Plugin_ListController extends \BaseController
 
             $pluginList = $this->getPluginListFromDB($pluginUsageType, $permissionTypes);
 
-            $response = $this->buildApiPluginListResponse($pluginList);
+            $this->logger->info($this->action, "plugin count:" . count($pluginList));
+
+            $pluginPublicKey = $this->ctx->Site_Config->getConfigValue(SiteConfig::SITE_PLUGIN_PLBLIC_KEY);
+            $response = $this->buildApiPluginListResponse($this->sessionId, $pluginList, $pluginPublicKey);
 
             $this->setRpcError($this->defaultErrorCode, "");
             $this->rpcReturn($transportData->getAction(), $response);
         } catch (Exception $ex) {
             $this->ctx->Wpf_Logger->error($tag, "error_msg=" . $ex);
+            $this->setRpcError("error.alert", $ex->getMessage());
             $this->rpcReturn($transportData->getAction(), new $this->classNameForResponse());
         }
+
+        return;
     }
 
     /**
@@ -120,7 +126,9 @@ class Api_Plugin_ListController extends \BaseController
 
             $encryptedSessionId = $this->ctx->ZalyAes->encrypt($sessionId, $pluginAuthKey);
 
-            $pluginProfile->setUserSessionId($encryptedSessionId);
+            $base64SessionId = ZalyBase64::base64url_encode($encryptedSessionId);
+
+            $pluginProfile->setUserSessionId($base64SessionId);
 
             $list[] = $pluginProfile;
         }

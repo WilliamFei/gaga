@@ -20,24 +20,24 @@ class Wpf_Logger
     private $infoLevel  = "info";
     private $sqlLevel   = "sql";
 
-    private $fileName = 'duckchat-site';
-    private $handler = '';
     private $logType = "";
-
-    private $debugInfoHeader = "duckchat-debugInfo";
 
     private $debugMode;
 
     public function __construct()
     {
-        $this->fileName = $this->fileName . "-" . date("Ymd") . ".log";
+        // 禁止在运行目录写Log
+        // $this->fileName = $this->fileName . "-" . date("Ymd") . ".log";
+        // $this->filePath = ZalyConfig::getConfig("logPath");
+        // if($this->filePath == ".") {
+        //     $this->filePath = dirname(__DIR__)."/../logs/";
+        // }
+        // $this->filePath = $this->filePath . "/" . $this->fileName;
+        // $this->handler = fopen($this->filePath, "a+");
 
-        $this->filePath = ZalyConfig::getConfig("logPath");
-        if($this->filePath == ".") {
-            $this->filePath = dirname(__DIR__)."/../logs/";
-        }
-        $this->filePath = $this->filePath . "/" . $this->fileName;
-        $this->handler = fopen($this->filePath, "a+");
+        // require ChromePhp
+        // $path = WPF_LIB_DIR . "/ChromePhp/ChromePhp.php";
+        // require_once($path);
 
         $this->debugMode = ZalyConfig::getConfig("debugMode");
     }
@@ -91,17 +91,25 @@ class Wpf_Logger
             $msg = json_encode($msg);
         }
 
-        $content = "[$this->logType] " . date("Y-m-d H:i:s") . " $tag $msg \n";
+        // $requestUri = $_SERVER["REQUEST_URI"];
+        $content = "$tag $msg \n";
 
+        $errorLevel = ($this->logType == $this->errorLevel) ? E_USER_WARNING : E_USER_NOTICE;
         if($this->debugMode == true) {
-            header($this->debugInfoHeader.":".$content);
-            fwrite($this->handler, $content);
+            // switch ($errorLevel) {
+            //     case E_USER_WARNING:
+            //         ChromePhp::warn($content);
+            //         break;
+                
+            //     default:
+            //         ChromePhp::log($content);
+            //         break;
+            // }
+            
+            trigger_error($content, $errorLevel);
+        } elseif ($this->logType == $this->errorLevel) {
+            trigger_error($content, $errorLevel);
         }
-
-        if($this->debugMode == false && $this->logType == $this->errorLevel) {
-            fwrite($this->handler, $content);
-        }
-
     }
 
     public function writeSqlLog($tag, $sql, $params = [], $startTime = 0)
@@ -111,14 +119,10 @@ class Wpf_Logger
         }
         $this->logType = $this->sqlLevel;
         $expendTime = microtime(true) - $startTime;
+        $expendTime = round($expendTime, 3) . "ms";
 
-        $content = "[$this->logType] " . date("Y-m-d H:i:s") . " $tag  sql=$sql  params=$params  expend_time=$expendTime\n";
-
-        if($this->debugMode == true) {
-            header($this->debugInfoHeader.":".$content);
-            fwrite($this->handler, $content);
-            return;
-        }
+        $content = "{$expendTime} $sql  params=$params";
+        $this->writeLog($tag, $content);
     }
 
     public function dbLog($tag, $sql, $params = [], $startTime = 0, $result)
@@ -132,14 +136,10 @@ class Wpf_Logger
         }
         $this->logType = $this->sqlLevel;
         $expendTime = microtime(true) - $startTime;
-        $content = "[$this->logType] "
-            . date("Y-m-d H:i:s")
-            . " $tag  sql=$sql  params=$params  expend_time=$expendTime "
-            . "result=$result \n";
-        if($this->debugMode == true) {
-            header($this->debugInfoHeader.":".$content);
-            fwrite($this->handler, $content);
-            return;
-        }
+        $expendTime = round($expendTime, 3) . "ms";
+
+        $content = "{$expendTime} $sql  params=$params";
+        
+        $this->writeLog($tag, $content);
     }
 }

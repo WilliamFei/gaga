@@ -6,7 +6,7 @@
  * Time: 10:58 AM
  */
 
-class Manage_Config_UpdateController extends ManageController
+class Manage_Config_UpdateController extends Manage_CommonController
 {
     /**
      * 站点管理

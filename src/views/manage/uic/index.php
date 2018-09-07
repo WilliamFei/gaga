@@ -532,7 +532,8 @@
      * @param target
      */
     function zalyjsCommonOpenPage(url, target = "_blank") {
-        window.open(url, target);
+        // window.open(url, target);
+        location.href = url;
     }
 
 </script>
@@ -578,17 +579,28 @@
     });
 
     function createUicResponse(url, result) {
-        alert(result);
+        if (result) {
+            var res = JSON.parse(result);
+            if (res.errCode == "success") {
+                window.location.reload();
+            } else {
+                alert(getLanguage() == 1 ? "生成邀请码失败" : "create invitation code error");
+            }
+        }
 
-        window.location.reload();
     }
 
     function deleteUicResponse(url, result) {
-        alert(result);
-
-        window.location.reload();
+        if (result) {
+            var res = JSON.parse(result);
+            if (res.errCode == "success") {
+                window.location.reload();
+            } else {
+                alert(getLanguage() == 1 ? "删除失败" : "delete invitation code error");
+            }
+        }
     }
-    
+
 </script>
 
 

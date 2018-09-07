@@ -43,7 +43,6 @@ class Site_Login
             //get userProfile from platform
             $loginUserProfile = $this->getUserProfileFromPlatform($preSessionId, $sitePriKeyPem);
 
-            $this->ctx->Wpf_Logger->info("api.site.login->api.session.verify", "profile=" . json_encode($loginUserProfile));
 
             //get intivation first
             $uicInfo = $this->getIntivationCode($loginUserProfile->getInvitationCode());
@@ -101,8 +100,6 @@ class Site_Login
             $this->ctx->Wpf_Logger->error("api.site.login", "get profile from platform url=" . $sessionVerifyUrl);
 
             $result = $this->ctx->ZalyCurl->request("post", $sessionVerifyUrl, $data);
-            $this->ctx->Wpf_Logger->info("api.site.login", "get profile from platform result=" . $result);
-
 
             //解析数据
             $transportData = new \Zaly\Proto\Core\TransportData();
@@ -128,6 +125,7 @@ class Site_Login
             $serialize = $this->ctx->ZalyAes->decrypt($aesData, $randomKey);
             //获取LoginUserProfile
             $loginUserProfile = unserialize($serialize);
+//            $this->ctx->Wpf_Logger->error("site: api.session.verify  api.site.login", " profile=" . $loginUserProfile->serializeToJsonString());
 
             return $loginUserProfile;
         } catch (Exception $ex) {

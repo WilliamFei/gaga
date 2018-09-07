@@ -399,6 +399,10 @@
 </script>
 
 <script id="tpl-share-group-div" type="text/html">
+    <div class="close_div">
+        <img src="../../public/img/close.png" onclick="closeMaskDiv('#share_group');">
+    </div>
+
         <div  style="width: 23rem;margin: 0 auto;margin-top: 3rem; ">
             <div class="qrcodeCanvas-title" >
                 <div class="header" style="width: 5rem;height: 5rem;margin-right: 1rem">
@@ -452,4 +456,28 @@
 
 <script id="tpl-string" type="text/html">
    {{string}}
+</script>
+
+<script id="tpl-search-user-info" type="text/html">
+    {{if userId != token}}
+        <div class="search-user">
+            <div class="search-user-info">
+                <img src="../../public/img/msg/default_user.png" class="user-image-for-search info-avatar-{{userId}}"/>
+                <span class="search-user-title">{{nickname}}</span>
+            </div>
+            <div>
+                <button class="search-add-friend-btn" data-local-value="addTip" userId="{{userId}}">添加</button>
+            </div>
+        </div>
+    {{else}}
+    <div class="search-user-img">
+        <img src="../../public/img/no_data.png">
+    </div>
+    {{/if}}
+</script>
+
+<script id="tpl-search-user-info-void" type="text/html">
+    <div class="search-user-img">
+        <img src="../../public/img/no_data.png">
+        </div>
 </script>

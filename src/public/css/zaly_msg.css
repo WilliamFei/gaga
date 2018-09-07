@@ -373,8 +373,8 @@ html, body{
 }
 
 .text-align-left #group-user-menu {
-    margin-top: 2rem;
     position: absolute;
+    top:2rem;
 }
 
 .msg-avatar img {
@@ -646,6 +646,7 @@ html, body{
     height:47rem;
     background:rgba(255,255,255,1);
     border-radius:0.94rem;
+    position: relative;
 }
 
 #selfInfo {
@@ -1209,6 +1210,7 @@ html, body{
     height: 47rem;
     background:rgba(255,255,255,1);
     border-radius:0.94rem;
+    position: relative;
 }
 
 .copy-share-group,
@@ -1364,4 +1366,121 @@ button:active{
 
 .web-msg-click {
     cursor: pointer;
+}
+
+#search-user-div {
+    width:39.4rem;
+    height:56.29rem;
+    background:rgba(255,255,255,1);
+    box-shadow:0rem 0.19rem 2.53rem 0rem rgba(0,0,0,0.3);
+}
+.search-user-header {
+    width:39.4rem;
+    height:5.63rem;
+    background:rgba(255,255,255,1);
+    box-shadow:0rem 0.09rem 0.38rem 0rem rgba(223,223,223,1);
+    position: relative;
+    text-align: center;
+}
+.search-user-content {
+    height:50rem;
+    overflow-y: scroll;
+}
+.search-user-header-content {
+    width:35rem;
+    height:3rem;
+    background:rgba(235,235,242,1);
+    border-radius:0.38rem;
+    margin-left: 2rem;
+    text-align: left;
+    position: absolute;
+    top:1rem;
+}
+
+.search-user-input {
+    margin-left: 0rem;
+    margin-top: 0rem;
+    background:rgba(235,235,242,1);
+    padding-left: 4rem;
+
+}
+.search-user-header img{
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    left: 3rem;
+    top: 1.5rem;
+}
+.search-user {
+    height:6rem;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.search-user img {
+    width:4rem;
+    height:4rem;
+    border-radius: 50%;
+}
+
+.search-add-friend-btn {
+    width:5.63rem;
+    height:2.63rem;
+    background:rgba(76,59,177,1);
+    border-radius:0.38rem;
+    font-size:1.31rem;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(255,255,255,1);
+    margin-top:2rem;
+    margin-right:2rem;
+    cursor: pointer;
+    outline: none;
+}
+.search-user-info {
+    position: relative;
+}
+
+.search-user-info img{
+    margin-top:1rem;
+    margin-left: 2rem;
+}
+
+.search-user-info span {
+    margin-top: 0rem;
+    position: absolute;
+    top: 2rem;
+    left: 7rem;
+}
+
+.search-user:hover {
+    background:rgba(244,244,249,1);
+}
+
+.search-user-img {
+    height:50rem;
+    text-align: center;
+    position: relative;
+}
+.search-user-img img{
+    width:12rem;
+    height:10rem;
+    border-radius: 0;
+    position:absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.close_div, .close_div img {
+    cursor:pointer;
+    width:2rem;
+    height:2rem;
+    position: absolute;
+    top:1rem;
+    right:1rem;
 }

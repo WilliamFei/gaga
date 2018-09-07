@@ -2,16 +2,17 @@ var clientType = "iOS"
 // var callbackIdParamName = "_zalyjsCallbackId"
 var callbackIdParamName = "zalyjsCallbackId"
 
-var zalyjsCallbackHelper = function() {
+function zalyjsCallbackHelperConstruct() {
+
     var thiz = this
     this.dict = {}
 
     //
     // var id = helper.register(callback)
     //
-    this.register = function(callback) {
+    this.register = function(callbackFunc) {
         var id = Math.random().toString()
-        thiz.dict[id] = callback
+        thiz.dict[id] = callbackFunc
         return id
     }
 
@@ -19,6 +20,8 @@ var zalyjsCallbackHelper = function() {
     // helper.call({"_zalyjsCallbackId", "args": ["", "", "", ....]  })
     //
     this.callback = function(param) {
+
+
         try {
             param = atob(param);
             // js json for \n
@@ -28,20 +31,23 @@ var zalyjsCallbackHelper = function() {
             var id = paramObj[callbackIdParamName]
 
             var args = paramObj["args"]
-            var callback = thiz.dict["" + id]
-            if (callback != undefined) {
+            var callbackFunc = thiz.dict["" + id]
+            if (callbackFunc != undefined) {
                 // callback.apply(undefined, args)
-                callback(args);
+                callbackFunc(args);
                 delete(thiz.dict[id])
             } else {
                 // do log
+                console.log("callback",  ""  + id  + "is undefined")
             }
         } catch (error) {
+            console.log("callback", error)
             // do log
         }
     }
     return this
-}();
+};
+var zalyjsCallbackHelper = new zalyjsCallbackHelperConstruct();
 
 getOsType();
 

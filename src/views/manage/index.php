@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Site Manage</title>
+    <title><?php if ($lang == "1") { ?>站点管理<?php } else { ?>Site Manage<?php } ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <style>
@@ -137,7 +137,13 @@
                 </div>
                 <div class="item-body">
                     <div class="item-body-display">
-                        <div class="item-body-desc">站点设置</div>
+                        <div class="item-body-desc">
+                            <?php if ($lang == "1") { ?>
+                                站点设置
+                            <?php } else { ?>
+                                Site Config
+                            <?php } ?>
+                        </div>
 
                         <div class="item-body-tail">
                             <img class="more-img"
@@ -157,7 +163,13 @@
                 </div>
                 <div class="item-body">
                     <div class="item-body-display">
-                        <div class="item-body-desc">小程序管理</div>
+                        <div class="item-body-desc">
+                            <?php if ($lang == "1") { ?>
+                                小程序管理
+                            <?php } else { ?>
+                                Mini Program Management
+                            <?php } ?>
+                        </div>
 
                         <div class="item-body-tail">
                             <img class="more-img"
@@ -177,7 +189,13 @@
                 </div>
                 <div class="item-body">
                     <div class="item-body-display">
-                        <div class="item-body-desc">用户管理</div>
+                        <div class="item-body-desc">
+                            <?php if ($lang == "1") { ?>
+                                用户管理
+                            <?php } else { ?>
+                                User Management
+                            <?php } ?>
+                        </div>
 
                         <div class="item-body-tail">
                             <img class="more-img"
@@ -196,7 +214,13 @@
                 </div>
                 <div class="item-body">
                     <div class="item-body-display">
-                        <div class="item-body-desc">群组管理</div>
+                        <div class="item-body-desc">
+                            <?php if ($lang == "1") { ?>
+                                群组管理
+                            <?php } else { ?>
+                                Group Management
+                            <?php } ?>
+                        </div>
 
                         <div class="item-body-tail">
                             <img class="more-img"
@@ -215,7 +239,12 @@
                 </div>
                 <div class="item-body">
                     <div class="item-body-display">
-                        <div class="item-body-desc">邀请码</div>
+                        <div class="item-body-desc">
+                            <?php if ($lang == "1") { ?>
+                                邀请码
+                            <?php } else { ?>
+                                Invitation Code
+                            <?php } ?></div>
 
                         <div class="item-body-tail">
                             <img class="more-img"
@@ -234,71 +263,10 @@
 </div>
 
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
-<!--<script src="../../public/js/im/zalyjsNative.js"></script>-->
-<!---->
+
 <script type="text/javascript">
 
-    var clientType = "";
-    var callbackIdParamName = "_zalyjsCallbackId"
-
-    var zalyjsCallbackHelper = function () {
-        var thiz = this
-        this.dict = {}
-
-        //
-        // var id = helper.register(callback)
-        //
-        this.register = function (callback) {
-            var id = Math.random().toString()
-            thiz.dict[id] = callback
-            return id
-        }
-
-        //
-        // helper.call({"_zalyjsCallbackId", "args": ["", "", "", ....]  })
-        //
-        this.callback = function (param) {
-
-            try {
-
-                param = atob(param)
-                param = param.replace(/[\r]+/g, "\\r")
-                param = param.replace(/[\n]+/g, "\\n")
-
-                var paramObj = JSON.parse(param)
-
-                var id = paramObj[callbackIdParamName]
-                var args = paramObj["args"]
-                var callback = thiz.dict["" + id]
-                console.log("callback: " + param)
-                if (callback != undefined) {
-                    callback.apply(undefined, args)
-                    delete(thiz.dict[id])
-
-                } else {
-                    // do log
-                }
-            } catch (e) {
-                // do log
-                if (false == isAndroid()) {
-                    // window.webkit.messageHandlers.logger.postMessage(typeof(param))
-
-                    window.webkit.messageHandlers.logger.postMessage(param)
-                    // window.webkit.messageHandlers.logger.postMessage(atob(param))
-                    // window.webkit.messageHandlers.logger.postMessage(e.message)
-                } else {
-                    console.log("error: " + e.message)
-                }
-            }
-        }
-        return this
-    }();
-
     function isAndroid() {
-
-        if (clientType != "" && clientType != null) {
-            return clientType.toLowerCase() == "android"
-        }
 
         var userAgent = window.navigator.userAgent.toLowerCase();
         if (userAgent.indexOf("android") != -1) {
@@ -315,13 +283,6 @@
         return false;
     }
 
-    function jsonToQueryString(json) {
-        url = Object.keys(json).map(function (k) {
-            return encodeURIComponent(k) + '=' + encodeURIComponent(json[k])
-        }).join('&')
-        return url
-    }
-
     function getLanguage() {
         var nl = navigator.language;
         if ("zh-cn" == nl || "zh-CN" == nl) {
@@ -330,58 +291,6 @@
         return 0;
     }
 
-    //
-    //
-    // Javascript Bridge Begin
-    //
-    //
-
-    function zalyjsSetClientType(t) {
-        clientType = t
-    }
-
-    function zalyjsAjaxGet(url, callback) {
-        var callbackId = zalyjsCallbackHelper.register(callback)
-
-        var messageBody = {}
-        messageBody["url"] = url
-        messageBody[callbackIdParamName] = callbackId
-        messageBody = JSON.stringify(messageBody)
-
-        if (isAndroid()) {
-            window.Android.zalyjsAjaxGet(messageBody)
-        } else {
-            window.webkit.messageHandlers.zalyjsAjaxGet.postMessage(messageBody)
-        }
-    }
-
-    function zalyjsAjaxGetJSON(url, param, callback) {
-        var queryString = jsonToQueryString(param)
-        if (url.indexOf("?") != -1) {
-            queryString = "&" + queryString
-        } else {
-            queryString = "?" + queryString
-        }
-        url = url + queryString
-        zalyjsAjaxGet(url, function (body) {
-            var jsonBody = JSON.parse(body)
-            callback(jsonBody)
-        })
-    }
-
-    function zalyjsAjaxPost(url, body, callback) {
-        var callbackId = zalyjsCallbackHelper.register(callback)
-        var messageBody = {}
-        messageBody["url"] = url
-        messageBody["body"] = body
-        messageBody[callbackIdParamName] = callbackId
-        messageBody = JSON.stringify(messageBody)
-        if (isAndroid()) {
-            window.Android.zalyjsAjaxPost(messageBody)
-        } else {
-            window.webkit.messageHandlers.zalyjsAjaxPost.postMessage(messageBody)
-        }
-    }
 
     function zalyjsAjaxPostJSON(url, body, callback) {
         zalyjsAjaxPost(url, jsonToQueryString(body), function (data) {
@@ -463,8 +372,13 @@
      * @param target
      */
     function zalyjsCommonOpenPage(url) {
+        // window.open(url, target);
         location.href = url;
     }
+
+</script>
+
+<script type="text/javascript">
 
     $("#site-config-id").click(function () {
         var url = "/index.php?action=manage.config&lang=" + getLanguage();

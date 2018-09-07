@@ -66,6 +66,17 @@ body,html {
     margin: auto 0;
     margin-bottom:  1rem;
 }
+.img-failed {
+    width: 2rem;
+    height:2rem;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -3rem;
+    margin: auto 0;
+    margin-bottom:  1rem;
+    display: none;
+}
 
 .pwd, .repwd , .clearLoginName{
     width: 2rem;

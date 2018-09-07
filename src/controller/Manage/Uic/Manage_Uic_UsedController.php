@@ -6,7 +6,7 @@
  * Time: 3:48 PM
  */
 
-class Manage_Uic_UsedController extends ManageController
+class Manage_Uic_UsedController extends Manage_CommonController
 {
 
     public function doRequest()

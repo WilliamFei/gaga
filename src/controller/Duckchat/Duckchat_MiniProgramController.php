@@ -13,7 +13,7 @@ use Google\Protobuf\Internal\Message;
 
 abstract class Duckchat_MiniProgramController extends \Wpf_Controller
 {
-    protected $httpHeader = ["KeepSocket" => true];
+    protected $logger;
     protected $headers = [];
     protected $bodyFormatType;
     protected $bodyFormatArr = [
@@ -33,16 +33,100 @@ abstract class Duckchat_MiniProgramController extends \Wpf_Controller
 
     protected $language = Zaly\Proto\Core\UserClientLangType::UserClientLangEN;
 
+    protected $pluginMiniProgramId;
     /**
      * @var BaseCtx
      */
     protected $ctx;
+
+    // ignore.~
+    public function __construct(Wpf_Ctx $context)
+    {
+        if (!$this->checkDBIsExist()) {
+            $this->action = $_GET['action'];
+            $this->requestTransportData = new \Zaly\Proto\Core\TransportData();
+            $this->setRpcError($this->errorSiteInit, ZalyConfig::getConfig("apiPageSiteInit"));
+            $this->rpcReturn($this->action, null);
+            return;
+        }
+        $this->logger = new Wpf_Logger();
+        $this->ctx = new BaseCtx();
+    }
 
     // return the name for parse json to Any.
     abstract public function rpcRequestClassName();
 
     // waiting for son~
     abstract public function rpc(\Google\Protobuf\Internal\Message $request, \Google\Protobuf\Internal\Message $transportData);
+
+
+    /**
+     * 处理方法， 根据bodyFormatType, 获取transData
+     * @return string|void
+     */
+    public function doIndex()
+    {
+        $tag = __CLASS__ . "-" . __FUNCTION__;
+
+        $this->action = $_GET['action'];
+
+        $this->bodyFormatType = isset($_GET['body_format']) ? $_GET['body_format'] : $this->defaultBodyFormat;
+        $this->bodyFormatType = strtolower($this->bodyFormatType);
+
+        if (!in_array($this->bodyFormatType, $this->bodyFormatArr)) {
+            $this->bodyFormatType = $this->defaultBodyFormat;
+        }
+
+        $this->pluginMiniProgramId = $_GET['miniProgramId'];
+
+        // 接收的 加密的数据流
+        $secretReqData = file_get_contents("php://input");
+
+        // 将数据转为TransportData
+        $this->requestTransportData = new \Zaly\Proto\Core\TransportData();
+
+        ////判断 request proto 类 是否存在。
+        $requestClassName = $this->rpcRequestClassName();
+        if (class_exists($requestClassName, true)) {
+            $usefulForProtobufAnyParse = new $requestClassName();
+        } else {
+            trigger_error("no request proto class: " . $requestClassName, E_USER_ERROR);
+            die();
+        }
+        try {
+            if ("json" == $this->bodyFormatType) {
+                if (empty($secretReqData)) {
+                    $secretReqData = "{}";
+                }
+                $this->requestTransportData->mergeFromJsonString($secretReqData);
+            } else if ("pb" == $this->bodyFormatType) {
+                $this->requestTransportData->mergeFromString($secretReqData);
+            } else if ("base64pb" == $this->bodyFormatType) {
+                $realData = base64_decode($secretReqData);
+                $this->requestTransportData->mergeFromString($realData);
+            }
+        } catch (Exception $e) {
+            $error = sprintf("parse proto error, format: %s, error: %s", $this->bodyFormatType, $e->getMessage());
+            $this->ctx->Wpf_Logger->error($tag, $error);
+            // disabled the rpcReturn online.
+            $this->setRpcError("error.proto.parse", $error);
+            $this->rpcReturn($this->action, null);
+            die();
+        }
+        $requestMessage = $usefulForProtobufAnyParse;
+        ////解析请求数据，
+        ///
+        if (null !== $this->requestTransportData->getBody()) {
+            $requestMessage = $this->requestTransportData->getBody()->unpack();
+        }
+
+        $this->handleHeader();
+
+        $this->getAndSetClientLang();
+        $this->getZalyErrorLang();
+
+        $this->rpc($requestMessage, $this->requestTransportData);
+    }
 
     /**
      * 设置transData header
@@ -76,99 +160,6 @@ abstract class Duckchat_MiniProgramController extends \Wpf_Controller
         return $this->action;
     }
 
-    // ignore.~
-    public function __construct(Wpf_Ctx $context)
-    {
-        if (!$this->checkDBIsExist()) {
-            $this->action = $_GET['action'];
-            $this->requestTransportData = new \Zaly\Proto\Core\TransportData();
-            $this->setRpcError($this->errorSiteInit, ZalyConfig::getApiPageSiteInit());
-            $this->rpcReturn($this->action, null);
-            return;
-        }
-
-        $this->ctx = new BaseCtx();
-    }
-
-    /**
-     * 处理方法， 根据bodyFormatType, 获取transData
-     * @return string|void
-     */
-    public function doIndex()
-    {
-        $tag = __CLASS__ . "-" . __FUNCTION__;
-
-        // 判断请求格式 json， pb, pb64
-        // body_format 只从$_GET中接收
-        $this->action = $_GET['action'];
-//        $this->checkDBCanWrite();
-
-        $this->bodyFormatType = isset($_GET['body_format']) ? $_GET['body_format'] : "";
-        $this->bodyFormatType = strtolower($this->bodyFormatType);
-
-        if (!in_array($this->bodyFormatType, $this->bodyFormatArr)) {
-            $this->bodyFormatType = $this->defaultBodyFormat;
-        }
-
-        $pluginId = isset($_COOKIE["miniProgramId"]) ? $_COOKIE["miniProgramId"] : "";
-        $encryptedSessionId = isset($_COOKIE["userSessionId"]) ? $_COOKIE["userSessionId"] : "";
-
-
-        $pluginId = 106;
-
-        // 接收的数据流
-        $reqData = file_get_contents("php://input");
-
-        // 将数据转为TransportData
-        $this->requestTransportData = new \Zaly\Proto\Core\TransportData();
-
-
-        //
-
-        ////判断 request proto 类 是否存在。
-        $requestClassName = $this->rpcRequestClassName();
-        if (class_exists($requestClassName, true)) {
-            $usefulForProtobufAnyParse = new $requestClassName();
-        } else {
-            trigger_error("no request proto class: " . $requestClassName, E_USER_ERROR);
-            die();
-        }
-        try {
-
-            if ("json" == $this->bodyFormatType) {
-                if (empty($reqData)) {
-                    $reqData = "{}";
-                }
-                $this->requestTransportData->mergeFromJsonString($reqData);
-            } elseif ("pb" == $this->bodyFormatType) {
-                $this->requestTransportData->mergeFromString($reqData);
-            } elseif ("base64pb" == $this->bodyFormatType) {
-                $realData = base64_decode($reqData);
-                $this->requestTransportData->mergeFromString($realData);
-            }
-
-        } catch (Exception $e) {
-            $error = sprintf("parse proto error, format: %s, error: %s", $this->bodyFormatType, $e->getMessage());
-            $this->ctx->Wpf_Logger->error($tag, $error);
-            // disabled the rpcReturn online.
-            $this->setRpcError("error.proto.parse", $error);
-            $this->rpcReturn($this->action, null);
-            die();
-        }
-        $requestMessage = $usefulForProtobufAnyParse;
-        ////解析请求数据，
-        ///
-        if (null !== $this->requestTransportData->getBody()) {
-            $requestMessage = $this->requestTransportData->getBody()->unpack();
-        }
-
-        $this->handleHeader();
-
-        $this->getAndSetClientLang();
-        $this->getZalyErrorLang();
-
-        $this->rpc($requestMessage, $this->requestTransportData);
-    }
 
     private function handleHeader()
     {
@@ -213,49 +204,6 @@ abstract class Duckchat_MiniProgramController extends \Wpf_Controller
             return;
         }
         echo $body;
-    }
-
-    /**
-     * @param Message $transportData
-     * @return string
-     */
-    public function getSessionId(\Google\Protobuf\Internal\Message $transportData)
-    {
-        $header = $transportData->getHeader();
-        $sessionId = $header[TransportDataHeaderKey::HeaderSessionid];
-        return $sessionId;
-    }
-
-    public function getPublicUserProfile($userInfo)
-    {
-        $publicUserProfile = new \Zaly\Proto\Core\PublicUserProfile();
-        $avatar = isset($userInfo['avatar']) ? $userInfo['avatar'] : "";
-        $publicUserProfile->setAvatar($avatar);
-        $publicUserProfile->setUserId($userInfo['userId']);
-        $publicUserProfile->setLoginname($userInfo['loginName']);
-        $publicUserProfile->setNickname($userInfo['nickname']);
-        $publicUserProfile->setNicknameInLatin($userInfo['nicknameInLatin']);
-
-        if (isset($userInfo['availableType'])) {
-            $publicUserProfile->setAvailableType($userInfo['availableType']);
-        } else {
-            $publicUserProfile->setAvailableType(\Zaly\Proto\Core\UserAvailableType::UserAvailableNormal);
-        }
-        return $publicUserProfile;
-    }
-
-    public function getGroupMemberUserProfile($user)
-    {
-        $tag = __CLASS__ . "-" . __FUNCTION__;
-
-        $publicUserProfile = $this->getPublicUserProfile($user);
-
-        $groupMemberUserProfile = new \Zaly\Proto\Site\ApiGroupMembersUserProfile();
-        $groupMemberUserProfile->setProfile($publicUserProfile);
-
-        $groupMemberUserProfile->setType((int)$user['memberType']);
-
-        return $groupMemberUserProfile;
     }
 
     protected function finish_request()

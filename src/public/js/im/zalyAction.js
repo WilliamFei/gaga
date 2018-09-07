@@ -40,6 +40,8 @@ var ZalyAction = {
     api_passport_passwordResetPassword :"site.ApiPassportPasswordResetPasswordRequest",
     duckchat_message_send : "plugin.DuckChatMessageSendRequest",
 
+    api_friend_search:"site.ApiFriendSearchRequest",
+
     im_stc_news :"im.stc.news",
     im_stc_message_key :"im.stc.message",
 

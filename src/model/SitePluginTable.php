@@ -157,25 +157,25 @@ class SitePluginTable extends BaseTable
 
             if ($usageType === Zaly\Proto\Core\PluginUsageType::PluginUsageNone) {
                 $sql = "select $this->queryColumns from $this->tableName  
-                        where 1!=:usageType and permissionType in (:permissionTypes) 
+                        where 1!=:usageType and permissionType in ($permissionTypes) 
                         order by sort ASC, id DESC";
             } else {
                 $sql = "select $this->queryColumns from $this->tableName 
-                        where usageType=:usageType and permissionType in (:permissionTypes) 
+                        where usageType=:usageType and permissionType in ($permissionTypes) 
                         order by sort ASC, id DESC";
             }
 
             $prepare = $this->db->prepare($sql);
             $this->handlePrepareError($tag, $prepare);
             $prepare->bindValue(":usageType", $usageType);
-            $prepare->bindValue(":permissionTypes", $permissionTypes);
             $prepare->execute();
             $results = $prepare->fetchAll(\PDO::FETCH_ASSOC);
-            $this->ctx->Wpf_Logger->writeSqlLog($tag, $sql, $usageType, $startTime);
+
+            $this->ctx->Wpf_Logger->writeSqlLog($tag, $sql, [$usageType, $permissionTypes], $startTime);
 
             return $results;
         } catch (Exception $ex) {
-            $this->ctx->Wpf_Logger->error($tag, " error_msg = " . $ex->getMessage());
+            $this->ctx->Wpf_Logger->error($tag, " error_msg = " . $ex);
             return [];
         }
 

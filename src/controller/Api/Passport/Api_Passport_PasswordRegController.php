@@ -52,6 +52,13 @@ class Api_Passport_PasswordRegController extends BaseController
                 throw new Exception("nickname  is  not exists");
             }
 
+            if(!$sitePubkPem || strlen($sitePubkPem) < 0) {
+                $errorCode = $this->zalyError->errorSitePubkPem;
+                $errorInfo = $this->zalyError->getErrorInfo($errorCode);
+                $this->setRpcError($errorCode, $errorInfo);
+                throw new Exception("sitePubkPem  is  not exists");
+            }
+
             $this->checkLoginName($loginName);
             $this->checkEmail($email);
             $preSessionId = $this->registerUserForPassport($loginName, $email, $password, $nickname, $invitationCode, $sitePubkPem);

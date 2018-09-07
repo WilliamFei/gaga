@@ -6,7 +6,7 @@
  * Time: 10:59 AM
  */
 
-class Manage_User_GroupsController extends ManageController
+class Manage_User_GroupsController extends Manage_CommonController
 {
 
     public function doRequest()

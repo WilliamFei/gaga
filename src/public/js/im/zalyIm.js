@@ -62,6 +62,7 @@ function handleImSendRequest(action, reqData, callback)
         for(var key in reqData) {
             body[key] = reqData[key];
         }
+        var sessionId = $(".session_id").attr("data");
 
         var header = {};
         header[HeaderSessionid] = sessionId;
@@ -118,7 +119,9 @@ function handleReceivedImMessage(resp, callback)
     if(result.header != undefined && result.header.hasOwnProperty(HeaderErrorCode)) {
         if(result.header[HeaderErrorCode] != "success") {
             if(result.header[HeaderErrorCode] == ErrorSessionCode ) {
-                wsImObj.close();
+                if(wsImObj != "" && wsImObj != undefined) {
+                    wsImObj.close();
+                }
                 localStorage.clear();
                 window.location.href = "./index.php?action=page.logout";
                 return;
